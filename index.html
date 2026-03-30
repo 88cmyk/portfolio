@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOA KIM — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F0EB;--ink:#0A0A0A;--muted:#5A5A5A;
+  --blue:#1A3AFF;--blue-lt:#E8ECFF;--white:#FFFFFF;
+  --dark:#0A0A0A;--border:rgba(10,10,10,0.10);
+  --serif:'DM Serif Display',serif;
+  --sans:'Noto Sans KR',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;}
+
+/* PAGE SYSTEM */
+.page{display:none;}.page.active{display:block;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 48px;background:rgba(242,240,235,0.95);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .3s;}
+.nav-logo{font-family:var(--mono);font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);text-decoration:none;cursor:pointer;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;cursor:pointer;}
+.nav-links a:hover,.nav-links a.active{color:var(--blue);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);transition:all .3s;}
+.mob-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:299;flex-direction:column;align-items:center;justify-content:center;gap:28px;}
+.mob-menu.open{display:flex;}
+.mob-menu a{font-family:var(--serif);font-size:30px;color:var(--ink);text-decoration:none;font-style:italic;cursor:pointer;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-rows:1fr auto;padding:140px 48px 64px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--serif);font-size:clamp(90px,17vw,250px);color:transparent;-webkit-text-stroke:1px rgba(10,10,10,.05);white-space:nowrap;pointer-events:none;user-select:none;letter-spacing:-.02em;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:14px;}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--blue);}
+.hero-sub{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:30px;margin-left:46px;}
+.hero-name{font-family:var(--serif);font-size:clamp(50px,9vw,128px);line-height:.92;letter-spacing:-.02em;margin-bottom:36px;}
+.hero-name em{font-style:italic;color:var(--blue);}
+.hero-desc{max-width:520px;font-size:15px;line-height:2;color:var(--muted);margin-bottom:44px;}
+.hero-desc p{margin-bottom:8px;}
+.hero-desc p:last-child{margin-bottom:0;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border);border-radius:2px;color:var(--muted);}
+.tag.bl{border-color:var(--blue);color:var(--blue);background:var(--blue-lt);}
+.hero-btm{display:flex;align-items:flex-end;justify-content:space-between;position:relative;z-index:1;border-top:1px solid var(--border);padding-top:22px;}
+.stats{display:flex;gap:44px;}
+.stat-n{font-family:var(--serif);font-size:34px;line-height:1;}
+.stat-l{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+.scroll-cue{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.scroll-cue::after{content:'';width:1px;height:38px;background:var(--muted);animation:sp 1.8s ease-in-out infinite;}
+@keyframes sp{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ── SECTIONS ── */
+section{padding:110px 48px;}
+.sec-hd{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:18px;margin-bottom:72px;}
+.sec-title{font-family:var(--serif);font-size:clamp(34px,5vw,60px);line-height:1;letter-spacing:-.01em;}
+.sec-num{font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--muted);}
+
+/* ── ABOUT ── */
+#about{background:var(--white);}
+.about-grid{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start;}
+.about-card{position:sticky;top:96px;}
+.profile-img{width:100%;aspect-ratio:1/1;background:linear-gradient(145deg,#E8E5DF,#D4D0C8);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:24px;position:relative;overflow:hidden;}
+.profile-img::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,58,255,.08) 0%,transparent 55%);}
+.profile-img::after{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--blue);}
+.pi-icon{font-size:52px;opacity:.15;z-index:1;}
+.pi-txt{font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;opacity:.35;z-index:1;}
+.ib{margin-bottom:22px;}
+.ib-title{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.ir{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid rgba(10,10,10,.05);font-size:11.5px;}
+.ir:last-child{border-bottom:none;}
+.ir-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:48px;flex-shrink:0;padding-top:2px;}
+.ir-val{color:var(--ink);line-height:1.5;}
+.ir-val a{color:var(--blue);text-decoration:none;}
+.about-main{}
+.about-hl{font-family:var(--serif);font-size:clamp(20px,2.8vw,30px);line-height:1.3;margin-bottom:24px;}
+.about-hl em{font-style:italic;color:var(--blue);}
+.about-body p{font-size:13.5px;line-height:1.95;color:var(--muted);margin-bottom:14px;}
+.about-body p:last-child{margin-bottom:0;}
+.career-sec{margin-top:52px;}
+.career-label{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.career-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.c-item{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--border);}
+.c-item:last-child{border-bottom:none;}
+.c-period{font-family:var(--mono);font-size:9px;letter-spacing:.07em;color:var(--blue);text-transform:uppercase;padding-top:2px;line-height:1.6;}
+.c-role{font-size:13px;font-weight:500;margin-bottom:2px;line-height:1.4;}
+.c-co{font-family:var(--mono);font-size:9.5px;color:var(--muted);letter-spacing:.05em;margin-bottom:3px;}
+.c-note{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ── EXPERTISE ── */
+#expertise{background:var(--bg);}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.exp-card{background:var(--white);padding:44px 32px;position:relative;overflow:hidden;transition:transform .3s;}
+.exp-card:hover{transform:translateY(-4px);}
+.exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.exp-card:hover::before{transform:scaleX(1);}
+.exp-n{font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;color:var(--blue);margin-bottom:20px;}
+.exp-title{font-family:var(--serif);font-size:21px;line-height:1.2;margin-bottom:14px;}
+.exp-desc p{font-size:12.5px;line-height:1.85;color:var(--muted);margin-bottom:9px;}
+.exp-desc p:last-child{margin-bottom:24px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.sk{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;background:var(--blue-lt);color:var(--blue);border-radius:2px;}
+
+/* ── WORK ── */
+#work{background:var(--dark);color:var(--white);}
+#work .sec-hd{border-bottom-color:rgba(255,255,255,.08);}
+#work .sec-num{color:rgba(255,255,255,.3);}
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:52px;}
+.fb{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:9px 18px;border:1px solid rgba(255,255,255,.16);background:transparent;color:rgba(255,255,255,.4);cursor:pointer;border-radius:2px;transition:all .2s;}
+.fb.on,.fb:hover{background:var(--blue);border-color:var(--blue);color:var(--white);}
+.proj-list{display:grid;gap:2px;}
+.pc{display:grid;grid-template-columns:240px 1fr auto;gap:36px;align-items:start;padding:28px 32px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:all .3s;}
+.pc:hover{background:rgba(26,58,255,.12);border-color:rgba(26,58,255,.32);}
+.pc-img{aspect-ratio:4/3;background:#161616;border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:rgba(255,255,255,.16);font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;position:relative;overflow:hidden;}
+.pc-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,58,255,.07) 0%,transparent 70%);}
+.pc-img-icon{font-size:18px;opacity:.1;}
+.pc-meta{padding-top:3px;}
+.pc-cat{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:9px;display:flex;align-items:center;gap:7px;}
+.pc-cat::before{content:'';width:18px;height:1px;background:var(--blue);}
+.pc-brand{font-family:var(--serif);font-size:21px;color:var(--white);margin-bottom:5px;line-height:1.2;}
+.pc-sub{font-size:11.5px;color:rgba(255,255,255,.45);margin-bottom:12px;font-weight:300;}
+.pc-desc{font-size:12px;line-height:1.8;color:rgba(255,255,255,.38);}
+.pc-desc p{margin-bottom:6px;}
+.pc-desc p:last-child{margin-bottom:0;}
+.pc-stats{display:flex;flex-direction:column;gap:12px;text-align:right;min-width:140px;}
+.ps-val{font-family:var(--serif);font-size:22px;color:var(--white);line-height:1;}
+.ps-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-top:2px;}
+.pc-period{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:rgba(255,255,255,.16);text-transform:uppercase;margin-top:7px;}
+
+/* ── CLIENTS ── */
+#clients{background:var(--white);}
+.logo-label{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.logo-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.logo-row{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:56px;}
+.logo-slot{flex:1 1 100px;min-width:88px;max-width:155px;aspect-ratio:2/1;background:var(--bg);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:background .2s;cursor:default;}
+.logo-slot:hover{background:var(--blue-lt);}
+.logo-ph{font-size:15px;opacity:.13;}
+.logo-nm{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.clients-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.cc{padding:28px 24px 24px;border:1px solid var(--border);display:flex;flex-direction:column;gap:9px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;background:var(--white);}
+.cc::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.cc:hover{background:var(--blue-lt);border-color:var(--blue);}
+.cc:hover::before{transform:scaleX(1);}
+.cc-arr{position:absolute;top:18px;right:18px;font-size:13px;color:var(--blue);opacity:0;transform:translateX(-5px);transition:all .25s;}
+.cc:hover .cc-arr{opacity:1;transform:translateX(0);}
+.cc-name{font-family:var(--serif);font-size:17px;line-height:1.2;}
+.cc-ind{font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);}
+.cc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;}
+.ct{font-family:var(--mono);font-size:7.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--border);color:var(--muted);border-radius:2px;}
+.cc-hint{font-family:var(--mono);font-size:8.5px;color:var(--blue);letter-spacing:.06em;margin-top:4px;opacity:0;transition:opacity .2s;}
+.cc:hover .cc-hint{opacity:1;}
+
+/* ── CONTACT ── */
+#contact{background:var(--dark);color:var(--white);text-align:center;padding:150px 48px;}
+.contact-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:28px;}
+.contact-h{font-family:var(--serif);font-size:clamp(38px,7vw,92px);line-height:.95;letter-spacing:-.02em;margin-bottom:44px;}
+.contact-h em{font-style:italic;color:var(--blue);}
+.contact-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+.cl{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;color:rgba(255,255,255,.5);text-decoration:none;padding:13px 22px;border:1px solid rgba(255,255,255,.1);border-radius:2px;transition:all .2s;}
+.cl:hover{color:var(--white);border-color:var(--blue);background:rgba(26,58,255,.14);}
+.c-note{font-family:var(--mono);font-size:9px;letter-spacing:.09em;color:rgba(255,255,255,.18);margin-top:18px;display:block;}
+footer{background:var(--dark);color:rgba(255,255,255,.18);padding:22px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05);}
+footer span{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;}
+
+/* ── DETAIL PAGE ── */
+.detail-top-nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(242,240,235,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.back-btn{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none;transition:color .2s;padding:0;}
+.back-btn:hover{color:var(--blue);}
+.detail-brand-nav{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);}
+
+/* Detail Hero */
+.d-hero{padding:140px 48px 72px;background:var(--dark);color:var(--white);position:relative;overflow:hidden;}
+.d-hero-bg{position:absolute;top:50%;right:-30px;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(70px,12vw,180px);color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.035);white-space:nowrap;pointer-events:none;user-select:none;}
+.d-hero-inner{position:relative;z-index:1;max-width:700px;}
+.d-cat{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:9px;}
+.d-cat::before{content:'';width:22px;height:1px;background:var(--blue);}
+.d-brand{font-family:var(--serif);font-size:clamp(34px,5.5vw,68px);color:var(--white);margin-bottom:14px;line-height:1.0;}
+.d-period{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.28);letter-spacing:.11em;text-transform:uppercase;margin-bottom:28px;}
+.d-tagline{font-size:14.5px;line-height:1.9;color:rgba(255,255,255,.58);}
+.d-tagline p{margin-bottom:9px;}
+
+/* Stats bar */
+.d-stats-bar{display:flex;border-top:1px solid rgba(255,255,255,.07);margin-top:44px;}
+.d-stat{flex:1;padding:22px 0;border-right:1px solid rgba(255,255,255,.06);text-align:center;}
+.d-stat:first-child{text-align:left;}
+.d-stat:last-child{border-right:none;}
+.d-stat-val{font-family:var(--serif);font-size:30px;color:var(--white);line-height:1;}
+.d-stat-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-top:3px;}
+
+/* Detail body — PMG portfolio style */
+.d-body{padding:72px 48px;}
+.d-two-col{display:grid;grid-template-columns:1fr 340px;gap:56px;align-items:start;}
+.d-sec-title{font-family:var(--mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;display:flex;align-items:center;gap:9px;}
+.d-sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* PMG-style project cards in detail */
+.proj-cards-grid{display:grid;gap:2px;margin-top:32px;}
+.pmg-card{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);overflow:hidden;}
+.pmg-card-img{background:#E0DDD8;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;}
+.pmg-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,58,255,.05) 0%,transparent 60%);}
+.pmg-img-placeholder{font-size:28px;opacity:.12;z-index:1;}
+.pmg-img-lbl{font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.3;z-index:1;}
+.pmg-card-info{padding:28px 24px;background:var(--white);}
+.pmg-card-eyebrow{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+.pmg-card-title{font-size:14px;font-weight:500;margin-bottom:14px;line-height:1.4;color:var(--ink);}
+.pmg-card-scope-title{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;margin-top:14px;}
+.pmg-card-scope li{font-size:11.5px;color:var(--muted);line-height:1.7;list-style:none;padding-left:0;}
+.pmg-card-scope li::before{content:'• ';color:var(--blue);}
+.pmg-card-result{display:flex;gap:16px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+.pmg-res-item{}
+.pmg-res-val{font-family:var(--serif);font-size:18px;color:var(--ink);line-height:1;}
+.pmg-res-lbl{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+
+/* Overview paragraph */
+.d-overview p{font-size:13.5px;line-height:1.9;color:var(--muted);margin-bottom:13px;}
+
+/* Bullet list */
+.d-bullets{margin-top:36px;}
+.d-bullet{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.75;color:var(--ink);}
+.d-bullet:last-child{border-bottom:none;}
+.d-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;margin-top:8px;flex-shrink:0;}
+
+/* Sidebar */
+.d-sidebar-card{background:var(--white);border:1px solid var(--border);padding:24px;margin-bottom:14px;}
+.d-sidebar-dark{background:var(--dark);border-color:#1A1A1A;}
+.sbt{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.sbr{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid rgba(10,10,10,.05);font-size:11.5px;}
+.sbr:last-child{border-bottom:none;}
+.sb-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);width:56px;flex-shrink:0;padding-top:2px;}
+.sb-val{color:var(--ink);line-height:1.5;}
+.sbr-dark{border-bottom-color:#1A1A1A;}
+.sbr-dark .sb-lbl{color:rgba(255,255,255,.3);}
+.sbr-dark .sb-val{color:rgba(255,255,255,.7);}
+
+/* Gallery */
+.d-gallery{margin-top:56px;}
+.gallery-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.gi{aspect-ratio:4/3;background:#E0DDD8;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;position:relative;overflow:hidden;}
+.gi::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,58,255,.04) 0%,transparent 60%);}
+.gi-lbl{font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.38;z-index:1;}
+.gi-icon{font-size:22px;opacity:.12;z-index:1;}
+
+/* ── ANIMATIONS ── */
+.fade{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease;}
+.fade.vis{opacity:1;transform:none;}
+.fd1{transition-delay:.08s;}.fd2{transition-delay:.16s;}.fd3{transition-delay:.24s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .about-grid{grid-template-columns:220px 1fr;gap:40px;}
+  .exp-grid{grid-template-columns:1fr 1fr;}
+  .exp-grid .exp-card:last-child{grid-column:1/-1;}
+  .pc{grid-template-columns:190px 1fr;}
+  .pc-stats{display:none;}
+  .clients-grid{grid-template-columns:repeat(2,1fr);}
+  .d-two-col{grid-template-columns:1fr 280px;gap:40px;}
+  .pmg-card{grid-template-columns:1fr;}
+}
+@media(max-width:900px){
+  nav{padding:15px 22px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  section{padding:72px 22px;}
+  .hero{padding:104px 22px 44px;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-card{position:static;display:grid;grid-template-columns:160px 1fr;gap:20px;}
+  .profile-img{margin-bottom:0;}
+  .exp-grid{grid-template-columns:1fr;}
+  .pc{grid-template-columns:1fr;gap:14px;}
+  .pc-img{display:none;}
+  .clients-grid{grid-template-columns:1fr 1fr;}
+  .gallery-g{grid-template-columns:1fr 1fr;}
+  .d-two-col{grid-template-columns:1fr;}
+  .d-hero{padding:112px 22px 56px;}
+  .d-body{padding:44px 22px;}
+  .detail-top-nav{padding:15px 22px;}
+  .stats{gap:20px;}
+  .d-stats-bar{flex-wrap:wrap;}
+  .d-stat{flex:1 1 40%;min-width:130px;}
+}
+@media(max-width:600px){
+  section{padding:56px 16px;}
+  .hero{padding:88px 16px 36px;}
+  .clients-grid{grid-template-columns:1fr;}
+  .gallery-g{grid-template-columns:1fr;}
+  .about-card{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:8px;text-align:center;}
+  .stat-n{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" onclick="goHome()">DOA KIM</a>
+  <ul class="nav-links">
+    <li><a onclick="navTo('#about')">소개</a></li>
+    <li><a onclick="navTo('#expertise')">전문 영역</a></li>
+    <li><a onclick="navTo('#work')">프로젝트</a></li>
+    <li><a onclick="navTo('#clients')">클라이언트</a></li>
+    <li><a onclick="navTo('#contact')">연락</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMob()" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a onclick="navTo('#about');toggleMob()">소개</a>
+  <a onclick="navTo('#expertise');toggleMob()">전문 영역</a>
+  <a onclick="navTo('#work');toggleMob()">프로젝트</a>
+  <a onclick="navTo('#clients');toggleMob()">클라이언트</a>
+  <a onclick="navTo('#contact');toggleMob()">연락</a>
+</div>
+
+<!-- ════════ PAGE: HOME ════════ -->
+<div id="page-home" class="page active">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">DOA</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Senior Project Manager</div>
+    <div class="hero-sub">Portfolio · PMG Integrated Communication · 2019–2025</div>
+    <h1 class="hero-name">DOA<br><em>KIM</em></h1>
+    <div class="hero-desc">
+      <p>브랜드 전략부터 현장 실행까지 —</p>
+      <p>크리에이티브 캠페인, 디지털 미디어, 이벤트를 통합해</p>
+      <p>소비자와 브랜드를 연결하는 인티그레이티드 마케터입니다.</p>
+    </div>
+    <div class="hero-tags">
+      <span class="tag bl">Integrated Campaign</span>
+      <span class="tag bl">Digital Strategy</span>
+      <span class="tag bl">Creative Direction</span>
+      <span class="tag">Event Management</span>
+      <span class="tag">Brand Experience</span>
+      <span class="tag">Performance AD</span>
+    </div>
+  </div>
+  <div class="hero-btm">
+    <div class="stats">
+      <div><div class="stat-n">6+</div><div class="stat-l">Years</div></div>
+      <div><div class="stat-n">29+</div><div class="stat-l">Projects</div></div>
+      <div><div class="stat-n">15+</div><div class="stat-l">Brands</div></div>
+    </div>
+    <div class="scroll-cue">Scroll</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-hd fade"><h2 class="sec-title">About</h2><span class="sec-num">01</span></div>
+  <div class="about-grid">
+    <div class="about-card fade fd1">
+      <div class="profile-img">
+        <div class="pi-icon">◻</div>
+        <div class="pi-txt">Profile Image</div>
+      </div>
+      <div>
+        <div class="ib">
+          <div class="ib-title">Contact</div>
+          <div class="ir"><div class="ir-lbl">Email</div><div class="ir-val"><a href="mailto:your@email.com">your@email.com</a></div></div>
+          <div class="ir"><div class="ir-lbl">Phone</div><div class="ir-val"><a href="tel:+8210-0000-0000">010-0000-0000</a></div></div>
+          <div class="ir"><div class="ir-lbl">LinkedIn</div><div class="ir-val"><a href="https://linkedin.com" target="_blank">linkedin.com/in/doakim</a></div></div>
+        </div>
+        <div class="ib">
+          <div class="ib-title">Education</div>
+          <div class="ir">
+            <div class="ir-lbl">2018</div>
+            <div class="ir-val">가톨릭대학교<br><small style="color:var(--muted);font-size:10.5px;">미디어기술콘텐츠학과 · 국어국문학과</small></div>
+          </div>
+        </div>
+        <div class="ib">
+          <div class="ib-title">Skills</div>
+          <div class="ir"><div class="ir-lbl">기획</div><div class="ir-val">캠페인 기획 · 크리에이티브 브리프</div></div>
+          <div class="ir"><div class="ir-lbl">디지털</div><div class="ir-val">소셜 · 퍼포먼스 광고 · CRM</div></div>
+          <div class="ir"><div class="ir-lbl">이벤트</div><div class="ir-val">팝업 · 전시 · 웨비나 · BTL</div></div>
+          <div class="ir"><div class="ir-lbl">Language</div><div class="ir-val">한국어 (원어민) · 영어 (비즈니스)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade fd2">
+      <h2 class="about-hl">브랜드의 <em>이야기</em>를<br>경험으로 만듭니다</h2>
+      <div class="about-body">
+        <p>PMG Integrated Communication에서 만 6년(2019.12.02 — 2025.12.12) 동안 다양한 글로벌·로컬 브랜드의 마케팅 캠페인을 기획하고 실행해왔습니다.</p>
+        <p>사원에서 차장(Account Manager)으로 성장하며 크리에이티브 개발, 디지털 미디어 운영, 이벤트 기획까지 End-to-End 통합 마케팅을 두루 경험했습니다.</p>
+        <p>Diageo(기네스, 조니워커, 돈훌리오, 탈리스커), TikTok for Business, 네이버 웨일, 윈저 글로벌 등 다양한 카테고리 브랜드와 협업하며 전략적 사고와 실무 실행력을 함께 키웠습니다.</p>
+        <p>기네스 나이트로서지 한국 런칭(아시아 최초)을 End-to-End로 총괄하며 판매 물량 목표 대비 +361%, 매출 +642%를 달성한 것이 대표 성과입니다.</p>
+      </div>
+      <div class="career-sec">
+        <div class="career-label">Career Timeline</div>
+        <div class="c-item">
+          <div class="c-period">2025.04 —<br>현재</div>
+          <div><div class="c-role">차장 / Account Manager</div><div class="c-co">PMG Integrated Communication</div><div class="c-note">셀 리드로 팀 운영 및 클라이언트 전략 관리 총괄</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-period">2024.08 —<br>2025.03</div>
+          <div><div class="c-role">과장 / Senior PM · 셀장</div><div class="c-co">PMG Integrated Communication</div><div class="c-note">Diageo(기네스·탈리스커) 브랜드 셀 리드</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-period">2024.04 —<br>2024.07</div>
+          <div><div class="c-role">과장 / Senior Project Manager</div><div class="c-co">PMG Integrated Communication</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-period">2021.11 —<br>2024.03</div>
+          <div><div class="c-role">대리 / Project Manager</div><div class="c-co">PMG Integrated Communication</div><div class="c-note">Diageo 조니워커·돈훌리오, 윈저글로벌, TikTok for Business</div></div>
+        </div>
+        <div class="c-item">
+          <div class="c-period">2019.12 —<br>2021.10</div>
+          <div><div class="c-role">사원 / Project Executive</div><div class="c-co">PMG Integrated Communication</div><div class="c-note">네이버 웨일, BAT Korea(glo), HP Korea 등</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="sec-hd fade"><h2 class="sec-title">전문 영역</h2><span class="sec-num">02</span></div>
+  <div class="exp-grid">
+    <div class="exp-card fade">
+      <div class="exp-n">01 ––</div>
+      <h3 class="exp-title">Creative &<br>Production</h3>
+      <div class="exp-desc">
+        <p>키 비주얼 개발, 캠페인 영상 기획·디렉션, 패키지 디자인, 굿즈 제작까지 —</p>
+        <p>브랜드 메시지를 비주얼 언어로 구현합니다.</p>
+        <p>글로벌 가이드라인을 준수하며 로컬 감성에 맞는 크리에이티브를 제안합니다.</p>
+      </div>
+      <div class="skill-tags"><span class="sk">KV 개발</span><span class="sk">캠페인 영상</span><span class="sk">패키지 디자인</span><span class="sk">촬영 디렉션</span><span class="sk">굿즈 기획</span></div>
+    </div>
+    <div class="exp-card fade fd1">
+      <div class="exp-n">02 ––</div>
+      <h3 class="exp-title">Digital Media<br>Management</h3>
+      <div class="exp-desc">
+        <p>소셜 채널 운영부터 인플루언서 바이럴, 퍼포먼스 광고까지 —</p>
+        <p>데이터 기반으로 미디어 전략을 수립하고 KPI를 초과 달성합니다.</p>
+        <p>인스타그램, 유튜브, 네이버, 카카오 등 다채널 통합 운영 경험 보유.</p>
+      </div>
+      <div class="skill-tags"><span class="sk">소셜 운영</span><span class="sk">인플루언서 바이럴</span><span class="sk">퍼포먼스 광고</span><span class="sk">SEO/블로그</span><span class="sk">CRM</span></div>
+    </div>
+    <div class="exp-card fade fd2">
+      <div class="exp-n">03 ––</div>
+      <h3 class="exp-title">Event<br>Management</h3>
+      <div class="exp-desc">
+        <p>팝업스토어, 전시 부스, B2B 세미나, 온라인 웨비나까지 —</p>
+        <p>기획·크리에이티브·운영을 일원화해 브랜드 경험을 설계합니다.</p>
+        <p>기네스 나이트로서지 팝업에서 방문객 KPI 162% 달성.</p>
+      </div>
+      <div class="skill-tags"><span class="sk">팝업 기획</span><span class="sk">전시 부스</span><span class="sk">웨비나 운영</span><span class="sk">BTL 활성화</span><span class="sk">현장 운영</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="sec-hd fade"><h2 class="sec-title" style="color:var(--white)">Selected<br>Work</h2><span class="sec-num">03</span></div>
+  <div class="filter-row fade">
+    <button class="fb on" onclick="filterProj('all',this)">전체</button>
+    <button class="fb" onclick="filterProj('creative',this)">Creative</button>
+    <button class="fb" onclick="filterProj('digital',this)">Digital</button>
+    <button class="fb" onclick="filterProj('event',this)">Event</button>
+  </div>
+  <div class="proj-list" id="projList">
+    <div class="pc fade" data-cat="creative event digital">
+      <div class="pc-img"><div class="pc-img-icon">◻</div><span>이미지 영역</span></div>
+      <div class="pc-meta">
+        <div class="pc-cat">Integrated Campaign</div>
+        <div class="pc-brand">Guinness Nitrosurge</div>
+        <div class="pc-sub">아시아 최초 한국 런칭 — KV / 팝업 / 바이럴 통합 캠페인</div>
+        <div class="pc-desc"><p>"우리 집 기네스 맛, 집이 되다" 키 메시지 개발부터</p><p>미디어데이, GS25 팝업(성수), YouTube PPL, 디지털 바이럴까지 End-to-End 총괄.</p><p>판매 물량 목표 대비 +361%, 매출 목표 대비 +642% 달성.</p></div>
+      </div>
+      <div class="pc-stats"><div><div class="ps-val">+361%</div><div class="ps-lbl">판매 물량 vs 목표</div></div><div><div class="ps-val">15.2M</div><div class="ps-lbl">Total Reach</div></div><div class="pc-period">2024.01 —</div></div>
+    </div>
+    <div class="pc fade fd1" data-cat="creative digital event">
+      <div class="pc-img"><div class="pc-img-icon">◻</div><span>이미지 영역</span></div>
+      <div class="pc-meta">
+        <div class="pc-cat">Creative & Event</div>
+        <div class="pc-brand">JW Black Ruby</div>
+        <div class="pc-sub">Jennie 리스닝 파티 × 미디어데이 × Black Ruby Bar 론칭 캠페인</div>
+        <div class="pc-desc"><p>Jennie 리스닝 파티 Black Ruby Bar 협업 운영.</p><p>미디어데이 — 셀럽·인플루언서 초청, 갤러리 월·포토존 기획·운영.</p><p>블랙 루비 바 퍼블릭 오픈 — 대부분 티켓 솔드아웃, 강한 오가닉 바이럴 달성.</p></div>
+      </div>
+      <div class="pc-stats"><div><div class="ps-val">Sold Out</div><div class="ps-lbl">Black Ruby Bar 티켓</div></div><div><div class="ps-val">500+</div><div class="ps-lbl">Private Party 초청</div></div><div class="pc-period">2025.02 — 05</div></div>
+    </div>
+    <div class="pc fade" data-cat="creative digital">
+      <div class="pc-img"><div class="pc-img-icon">◻</div><span>이미지 영역</span></div>
+      <div class="pc-meta">
+        <div class="pc-cat">Creative & Digital</div>
+        <div class="pc-brand">Johnnie Walker</div>
+        <div class="pc-sub">Festive 시즌 통합 캠페인 — Join Us, Johnnie Walker</div>
+        <div class="pc-desc"><p>위하준·유용욱·김윤아 출연 Key Video 제작, 3 Phase KV 개발.</p><p>DOOH·PPL·디지털 바이럴 통합 운영.</p><p>총 도달 226M, 네이버 쿼리 전년 대비 +29% 달성.</p></div>
+      </div>
+      <div class="pc-stats"><div><div class="ps-val">226M</div><div class="ps-lbl">Total Reach</div></div><div><div class="ps-val">2,646</div><div class="ps-lbl">콘텐츠 생성</div></div><div class="pc-period">2023.10 — 2024.02</div></div>
+    </div>
+    <div class="pc fade fd1" data-cat="creative digital event">
+      <div class="pc-img"><div class="pc-img-icon">◻</div><span>이미지 영역</span></div>
+      <div class="pc-meta">
+        <div class="pc-cat">Integrated Campaign</div>
+        <div class="pc-brand">Naver Whale</div>
+        <div class="pc-sub">브랜드 대세감 구축 — 캠페인 영상·소셜·체크인 이벤트</div>
+        <div class="pc-desc"><p>'시바브바' 캠페인 영상 제작, 소셜 채널 팬덤 전략 수립.</p><p>'매일 웨일해 체크인' 이벤트 기획·운영.</p><p>참여자 184,035명, 다운로드 전환 721,991건, 유튜브 조회수 4M+.</p></div>
+      </div>
+      <div class="pc-stats"><div><div class="ps-val">184K</div><div class="ps-lbl">이벤트 참여자</div></div><div><div class="ps-val">25.6M</div><div class="ps-lbl">총 노출 수</div></div><div class="pc-period">2020.10 — 2021.06</div></div>
+    </div>
+    <div class="pc fade" data-cat="creative digital event">
+      <div class="pc-img"><div class="pc-img-icon">◻</div><span>이미지 영역</span></div>
+      <div class="pc-meta">
+        <div class="pc-cat">Global Campaign</div>
+        <div class="pc-brand">TikTok for Business</div>
+        <div class="pc-sub">Ready, Set, Create — 글로벌 SMB 웨비나 (KR·JP)</div>
+        <div class="pc-desc"><p>글로벌 KV·웨비나 랜딩 개발, 한국·일본 로컬라이제이션.</p><p>한국 웨비나 총괄 / 일본 웨비나 현장 메인 담당.</p><p>한국 RSVP 1,428명, 일본 1,561명, KR 조회수 3.3M.</p></div>
+      </div>
+      <div class="pc-stats"><div><div class="ps-val">2,989</div><div class="ps-lbl">총 RSVP</div></div><div><div class="ps-val">3.3M</div><div class="ps-lbl">조회수 (KR)</div></div><div class="pc-period">2023.04 — 2023.08</div></div>
+    </div>
+    <div class="pc fade fd1" data-cat="creative digital">
+      <div class="pc-img"><div class="pc-img-icon">◻</div><span>이미지 영역</span></div>
+      <div class="pc-meta">
+        <div class="pc-cat">Beauty · New Business</div>
+        <div class="pc-brand">Laka</div>
+        <div class="pc-sub">신규 비딩 — FILL ME / FEEL ME 캠페인 기획 및 실행</div>
+        <div class="pc-desc"><p>브랜드 리뉴얼 시점 비딩 제안 통과, '필미 틴트' 펫네임 개발.</p><p>7·8월 디지털 바이럴 100건+ 제작·운영.</p><p>8월 ROAS 264%, 올리브영 메이크업 카테고리 1위 달성.</p></div>
+      </div>
+      <div class="pc-stats"><div><div class="ps-val">264%</div><div class="ps-lbl">8월 ROAS</div></div><div><div class="ps-val">#1</div><div class="ps-lbl">올리브영 메이크업</div></div><div class="pc-period">2025.06 — 2025.09</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="sec-hd fade"><h2 class="sec-title">Clients</h2><span class="sec-num">04</span></div>
+
+  <div class="logo-label fade">Brand Logos — 추후 업데이트</div>
+  <div class="logo-row fade">
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Diageo</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Guinness</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">J.Walker</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Don Julio</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Talisker</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Naver</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">TikTok</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Windsor</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">HP Korea</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">BAT</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Laka</div></div>
+    <div class="logo-slot"><div class="logo-ph">◻</div><div class="logo-nm">Hermès</div></div>
+  </div>
+
+  <div class="clients-grid">
+    <div class="cc fade" onclick="openClient('diageo')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">Diageo</div>
+      <div class="cc-ind">글로벌 주류 브랜드</div>
+      <div class="cc-tags"><span class="ct">Guinness</span><span class="ct">Johnnie Walker</span><span class="ct">Don Julio</span><span class="ct">Talisker</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade fd1" onclick="openClient('naver')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">Naver</div>
+      <div class="cc-ind">테크 · 플랫폼</div>
+      <div class="cc-tags"><span class="ct">Whale</span><span class="ct">Financial</span><span class="ct">MyCar</span><span class="ct">Na.</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade fd2" onclick="openClient('tiktok')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">TikTok<br>for Business</div>
+      <div class="cc-ind">글로벌 캠페인 KR·JP</div>
+      <div class="cc-tags"><span class="ct">Ready Set Create</span><span class="ct">Grow with TikTok</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade" onclick="openClient('windsor')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">Windsor Global</div>
+      <div class="cc-ind">주류 브랜드</div>
+      <div class="cc-tags"><span class="ct">소셜 전략</span><span class="ct">Windsor Talk</span><span class="ct">웹사이트</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade fd1" onclick="openClient('bat')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">BAT Korea</div>
+      <div class="cc-ind">British American Tobacco</div>
+      <div class="cc-tags"><span class="ct">Glo 디지털</span><span class="ct">KV 개발</span><span class="ct">셀럽 기프팅</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade fd2" onclick="openClient('hp')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">HP Korea</div>
+      <div class="cc-ind">B2B IT 브랜드</div>
+      <div class="cc-tags"><span class="ct">K-Print</span><span class="ct">KOSIGN</span><span class="ct">웨비나</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade" onclick="openClient('laka')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">Laka</div>
+      <div class="cc-ind">뷰티 브랜드</div>
+      <div class="cc-tags"><span class="ct">리브랜딩</span><span class="ct">올영픽</span><span class="ct">퍼포먼스</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+    <div class="cc fade fd1" onclick="openClient('others')">
+      <span class="cc-arr">→</span>
+      <div class="cc-name">기타</div>
+      <div class="cc-ind">다양한 카테고리</div>
+      <div class="cc-tags"><span class="ct">Hermès</span><span class="ct">TS Trillion</span><span class="ct">Essilor</span><span class="ct">Energizer</span></div>
+      <div class="cc-hint">상세 보기 →</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-lbl fade">Get In Touch</div>
+  <h2 class="contact-h fade">Let's<br><em>Work</em><br>Together.</h2>
+  <div class="contact-links fade">
+    <a href="mailto:your@email.com" class="cl">✉ your@email.com</a>
+    <a href="tel:+8210-0000-0000" class="cl">✆ 010-0000-0000</a>
+    <a href="https://linkedin.com" target="_blank" class="cl">in LinkedIn</a>
+  </div>
+  <span class="c-note fade">* 연락처는 추후 업데이트 예정입니다</span>
+</section>
+<footer>
+  <span>© 2025 Doa Kim · All Rights Reserved</span>
+  <span>PMG Integrated Communication · 2019.12 — 2025.12</span>
+</footer>
+
+</div><!-- /page-home -->
+
+<!-- ════════ PAGE: CLIENT DETAIL ════════ -->
+<div id="page-detail" class="page">
+  <div class="detail-top-nav">
+    <button class="back-btn" onclick="goHome()"><span style="font-size:16px">←</span> 전체 클라이언트</button>
+    <div class="detail-brand-nav" id="d-nav-name"></div>
+  </div>
+  <div id="d-content"></div>
+</div>
+
+<!-- ════════ CLIENT DATA ════════ -->
+<script>
+const CL = {
+  diageo:{
+    cat:'Global Spirits',brand:'Diageo',period:'2023.10 — 2025',
+    tagline:['Diageo 산하 4개 브랜드(기네스, 조니워커, 돈훌리오, 탈리스커)를 담당하며','크리에이티브 개발부터 팝업 운영, 디지털 바이럴까지 통합 마케팅을 실행했습니다.','기네스 나이트로서지 아시아 최초 한국 런칭을 End-to-End로 총괄한 것이 대표 성과입니다.'],
+    stats:[{v:'+361%',l:'나이트로서지 판매 물량 vs 목표'},{v:'226M',l:'조니워커 Festive Reach'},{v:'12.3K+',l:'JW×오징어게임 팝업 방문객'},{v:'Sold Out',l:'JW Black Ruby Bar 티켓'}],
+    overview:['Diageo 산하 프리미엄 주류 브랜드 4종을 동시 담당하며, 브랜드별 포지셔닝에 맞는 차별화 전략을 기획하고 실행했습니다.',
+      '기네스 나이트로서지의 아시아 최초 한국 런칭을 총괄하며 키 메시지 개발, 패키지 디자인, 미디어데이, GUINNESS HOUSE 팝업 운영, 디지털 바이럴을 통합 실행했습니다.',
+      '조니워커 Festive 시즌 캠페인에서는 위하준·유용욱·김윤아 출연 Key Video를 기획·제작하고 DOOH, PPL, 디지털 바이럴을 통합 운영했습니다.',
+      '조니워커 X 오징어게임 성수 팝업에서 12.3K+ 방문객을 달성했고, JW Black Ruby 론칭에서는 Jennie 리스닝 파티 협업과 Black Ruby Bar 운영으로 티켓 솔드아웃을 기록했습니다.',
+      '돈훌리오 Frieze 91 스폰서십 팝업, 탈리스커 Snow Peak 아웃도어 행사 등 럭셔리·아트 커뮤니티 타겟 이벤트를 기획하고 현장 총괄했습니다.'],
+    pmg:[
+      {eyebrow:'Guinness · 2025.04',title:'GUINNESS HOUSE 팝업 (성수)',scope:['성수 Door to Sungsu에서 "GUINNESS HOUSE" 콘셉트 팝업 운영','포토존·퀴즈존·파우링존 구성, 홈드링킹 USP 전달','한정판 굿즈 제작 및 팝업 한정 에디션 증정으로 브랜드 접점 확대'],result:[]},
+      {eyebrow:'Johnnie Walker · 2024.11',title:'JW × 오징어게임 성수 팝업',scope:['성수 핫스팟에 JW 블랙라벨·오징어게임 컬래버 거대 보틀 조형물 설치','번호 뽑기, 3가지 오징어게임 게임 체험 존 기획·운영','방문객 12.3K+, LOL 4K+ 달성'],result:[{v:'12.3K+',l:'방문객'},{v:'4K+',l:'LOL'}]},
+      {eyebrow:'Johnnie Walker · 2025.02',title:'JW Black Ruby 론칭 캠페인',scope:['Jennie 리스닝 파티 Black Ruby Bar 협업 운영 — 브랜드 조명 POSM, 시그니처 칵테일 제공','미디어데이 — 갤러리 월·포토존·Black Ruby Bar 운영','퍼블릭 Black Ruby Bar — 티켓 대부분 솔드아웃, 강한 오가닉 바이럴'],result:[{v:'Sold Out',l:'Bar 티켓'},{v:'500+',l:'Private Party 초청'}]},
+      {eyebrow:'Don Julio · 2024.09',title:'Donjulio × Frieze 91 팝업 & 스폰서십',scope:['Frieze 서울 공식 파트너로 한남동 팝업 3층 기획·운영','소라 최 협업 전시 중심의 럭셔리 브랜드 경험 설계','패션 모델·아트 아티스트 초청 프라이빗·퍼블릭 파티 운영'],result:[{v:'7.6M',l:'Suri 파티 Reach'}]},
+    ],
+    bullets:['기네스 나이트로서지 — 아시아 최초 한국 런칭 End-to-End 총괄 (KV, 패키지, 미디어데이, 팝업, PPL, 바이럴)','기네스 GUINNESS HOUSE 팝업 — 성수 Door to Sungsu, 홈드링킹 콘셉트 공간 기획·운영','JW Festive 통합 캠페인 — 위하준·유용욱·김윤아 Key Video, DOOH·PPL·디지털 바이럴 (226M Reach)','JW × 오징어게임 성수 팝업 — 방문객 12.3K+, LOL 4K+','JW Black Ruby 론칭 — Jennie 리스닝 파티 협업, 미디어데이, Black Ruby Bar 티켓 솔드아웃','JW Blue "The Peak of Winter" 팝업 — 몬드리안 이태원, 500+ VIP 초청 Private Party 총괄','Don Julio 1942 Fiesta 런칭 — 메가 클럽 온트레이드, Frieze 91 스폰서십 팝업 기획·운영','탈리스커 — 소셜 리테인 플랜 수립, Snow Peak 스폰서십 행사 총괄','기네스 0.0 — 아시아 최초 논알콜 KV "I Ch0.0se Guinness 0.0" 개발 및 런칭 바이럴'],
+    sidebar:{기간:'2023.10 — 2025',역할:'차장 / 과장 (셀장)',담당브랜드:'Guinness · Johnnie Walker · Don Julio · Talisker',카테고리:'Creative, Digital, Event'},
+    images:['기네스 GUINNESS HOUSE 팝업','JW × 오징어게임 팝업','JW Black Ruby 미디어데이','Don Julio Frieze 팝업','탈리스커 Snow Peak 행사','기네스 0.0 런칭 바이럴']
+  },
+  naver:{
+    cat:'Tech · Platform',brand:'Naver',period:'2020.10 — 2022.10',
+    tagline:['네이버 웨일 브라우저의 브랜드 대세감 구축 캠페인을 총괄하며','캠페인 영상, 소셜 채널, 체크인 이벤트를 통합 운영했습니다.','참여자 184,035명 달성한 "매일 웨일해 체크인" 이벤트를 기획했습니다.'],
+    stats:[{v:'184K',l:'체크인 이벤트 참여자'},{v:'721,991',l:'다운로드 전환 수'},{v:'25.6M',l:'통합 노출 수'},{v:'4M+',l:'시바브바 YouTube 조회수'}],
+    overview:['네이버 웨일 브라우저의 브랜드 대세감 구축을 위한 통합 캠페인을 담당했습니다.','"시바브바(시대가 바뀌면 브라우저도 바뀐다)" 캠페인 영상을 기획·제작하고, 팬덤 마케팅 기반의 소셜 채널 전략을 수립했습니다.','"매일 웨일해 체크인" 이벤트를 기획·운영하며 참여자 184,035명, 체크인 1,792,123건을 달성했습니다.','네이버 파이낸셜, 네이버 마이카, 네이버 앱(Na.) 등 다양한 서비스의 퍼포먼스 광고도 함께 담당했습니다.'],
+    pmg:[
+      {eyebrow:'Naver Whale · 2020',title:'시바브바 캠페인 영상 제작',scope:['시대가 바뀌면 브라우저도 바뀐다 — 키 카피 개발 및 영상 기획','5편 드라마 형식 캠페인 영상 제작 기획','YouTube 조회수 4M+ 달성'],result:[{v:'4M+',l:'YouTube 조회수'}]},
+      {eyebrow:'Naver Whale · 2021',title:'매일 웨일해 체크인 이벤트',scope:['일별 체크인 이벤트 기획·운영 (총 6개월)','팬덤명 "웨일러" 기획, 소셜 채널 통합 운영','다운로드 전환 721,991건 달성'],result:[{v:'184K',l:'참여자'},{v:'721K',l:'다운로드 전환'}]},
+    ],
+    bullets:['네이버 웨일 — "시바브바" 캠페인 영상 기획·제작, 모션그래픽 8종 제작','소셜 채널(IG·YT·Blog·Twitter·FB) 통합 운영, 팬덤명 "웨일러" 기획','매일 웨일해 체크인 이벤트 — 참여자 184,035명, 체크인 1,792,123건','웨-일러스트 배경테마 공모전 — 기획·KV 디자인 총괄, 참가자 837명','네이버 앱(Na.) — 신규 기능 홍보 콘텐츠 및 퍼포먼스 광고 운영 (노출 33.4M)','네이버 파이낸셜·마이카 퍼포먼스 광고 기획·운영'],
+    sidebar:{기간:'2020.10 — 2022.10',역할:'사원 / 대리',담당서비스:'Whale · Financial · MyCar · App',카테고리:'Creative, Digital, Event'},
+    images:['시바브바 캠페인 영상','체크인 이벤트 페이지','소셜 채널 운영','공모전 KV','웨일북 홈페이지','퍼포먼스 광고']
+  },
+  tiktok:{
+    cat:'Global Campaign (KR · JP)',brand:'TikTok for Business',period:'2023.04 — 2023.10',
+    tagline:['SMB 대상 TikTok for Business 글로벌 웨비나 캠페인(KR·JP)을 총괄했습니다.','글로벌 KV 개발부터 한국·일본 로컬라이제이션, 웨비나 현장 운영까지 End-to-End로 담당했습니다.','영어 기반 글로벌 프로젝트로 한국 및 일본 PMG 지사와 협업했습니다.'],
+    stats:[{v:'2,989',l:'총 RSVP (KR+JP)'},{v:'3.3M',l:'KR 크리에이터 조회수'},{v:'240K',l:'뉴스레터 발송 대상'},{v:'2개국',l:'글로벌 운영'}],
+    overview:['TikTok for Business의 글로벌 SMB 웨비나 캠페인 "Ready, Set, Create"와 "Grow with TikTok"을 담당했습니다.','영어 마스터 KV 개발 후 한국(KR)과 일본(JP) 로컬라이제이션을 진행하고, 웨비나 랜딩 페이지(Splash)를 기획·개발했습니다.','한국 웨비나 총괄 및 일본 웨비나 현장 메인 담당으로 PMG 일본 지사와 협업했습니다.','크리에이터 협업, 뉴스레터 광고, 네이버 카페 바이럴 등 다채널 모객 전략으로 KPI를 초과 달성했습니다.'],
+    pmg:[
+      {eyebrow:'TikTok for Business · 2023',title:'Ready, Set, Create — 글로벌 웨비나',scope:['글로벌 Master KV·카피 개발 및 KR/JP 로컬라이제이션','웨비나 랜딩 페이지(Splash) 기획·개발, eDM·소셜·바이럴 소재 제작','한국 웨비나 총괄 / 일본 웨비나 현장 메인 담당'],result:[{v:'1,428',l:'KR RSVP'},{v:'1,561',l:'JP RSVP'}]},
+    ],
+    bullets:['Ready, Set, Create — 글로벌 Master KV·카피 개발 및 KR/JP 로컬라이제이션','웨비나 랜딩 페이지(Splash) 기획·개발, eDM·MMS·광고 소재 제작','한국 웨비나 총괄 / 일본 웨비나 현장 메인 담당 (PMG Japan 협업)','KR 크리에이터 3인 TikTok·IG 협업 — 총 3.3M 조회수 달성','뉴스레터 광고 (24만명) — KPI 초과, RSVP 231명 확보','Grow with TikTok — 아시아 SMB Hub 사이트 기획·개발'],
+    sidebar:{기간:'2023.04 — 2023.10',역할:'대리',언어:'영어 기반 프로젝트',운영국가:'Korea · Japan',카테고리:'Creative, Digital, Event'},
+    images:['Ready Set Create KV','한국 웨비나 현장','일본 웨비나 현장','Grow with TikTok Hub','크리에이터 콘텐츠','웨비나 PPT 템플릿']
+  },
+  windsor:{
+    cat:'Spirits Brand',brand:'Windsor Global',period:'2022.09 — 2023.03',
+    tagline:['위스키 소비 증가 트렌드에 맞춰 Windsor/W 이원화 포지셔닝 전략을 수립했습니다.','Windsor Talk 영상 시리즈(15편)를 기획·제작하고,','공식 홈페이지 리뉴얼과 사내 커뮤니티 플랫폼 구축까지 담당했습니다.'],
+    stats:[{v:'183만',l:'Windsor Talk 조회수'},{v:'+2,259',l:'W 인스타그램 팔로워'},{v:'12.24M',l:'YouTube 총 조회수'},{v:'45%',l:'뉴스레터 평균 오픈율'}],
+    overview:['주류 시장 내 위스키 소비 증가 트렌드를 반영해 Windsor / W 이원화 소셜 포지셔닝 전략을 제안하고 실행했습니다.','Windsor Talk 영상 시리즈(15편)를 기획·제작하며 배성재, 정가영, 알베르토 몬디 등 다양한 출연진과 협업했습니다.','공식 홈페이지 리뉴얼 및 글로벌 임직원 대상 사내 커뮤니티 플랫폼(Windsor Community)을 기획·개발했습니다.'],
+    pmg:[
+      {eyebrow:'Windsor Global · 2022',title:'Windsor × W 이원화 소셜 전략',scope:['Windsor(클래식 헤리티지)/W(트렌디) 포지셔닝 전략 수립','Windsor Talk 시리즈 15편 기획·제작·운영 (총 조회수 183만)','설날 시즌 한정 패키지 촬영 기획·진행'],result:[{v:'183만',l:'Talk 조회수'},{v:'+2,259',l:'W IG 팔로워'}]},
+    ],
+    bullets:['Windsor × W 이원화 포지셔닝 전략 수립 및 비주얼 시스템 설계','Windsor Talk 시리즈 15편 기획·제작·운영 (총 조회수 183만)','W 인스타그램 분기 운영 — Follower +2,259, Impressions 1.97M','설날 시즌 한정 패키지 촬영 기획·진행 및 브랜드 어셋 제작','공식 홈페이지 리뉴얼 (영문 번역, UI/UX 기획, 연령 확인 팝업)','Windsor Community 사내 플랫폼 기획·개발 (Admin 구조 포함)','GQ·디에디트 매거진 협업, 서울라이터·뉴술레터 뉴스레터 바이럴 운영'],
+    sidebar:{기간:'2022.09 — 2023.03',역할:'대리',담당브랜드:'Windsor · W',카테고리:'Creative, Digital, Brand Strategy'},
+    images:['Windsor Talk 촬영','W 인스타그램 피드','공식 홈페이지','설날 패키지 촬영','House of Windsor 팝업','매거진 협업']
+  },
+  bat:{
+    cat:'British American Tobacco',brand:'BAT Korea',period:'2020.04 — 2022.02',
+    tagline:['담배 규제 환경에서 glo 브랜드의 디지털 마케팅을 기획·실행했습니다.','KV 개발, 소셜 채널 운영, CRM, 퍼포먼스 광고, 블로그 SEO 등','다채널 통합 디지털 마케팅 경험을 쌓았습니다.'],
+    stats:[{v:'40명+',l:'월 블로그 협업 인원'},{v:'19세+',l:'규제 환경 타겟팅'},{v:'4개',l:'glo 플랫폼 운영'},{v:'셀럽 4인',l:'glo 프로 슬림 기프팅'}],
+    overview:['담배 제품의 강한 광고 규제 환경에서 glo 브랜드의 디지털 마케팅 전략을 기획하고 실행했습니다.','월별 KV 개발 및 Key Video 3종 제작, 소셜 채널 운영을 담당했습니다.','glo 공식 웹사이트, 카카오톡 채널, CRM(eDM·LMS·MMS) 운영을 통해 고객 여정 전반을 관리했습니다.'],
+    pmg:[
+      {eyebrow:'BAT Korea · 2020',title:'glo 통합 디지털 마케팅',scope:['월별 Key Visual 개발 및 전 채널 통일감 유지','Key Video 3종 기획·제작 ("프로검색러" 시리즈)','Discover Glo · Glo Try · Glo Live 웹사이트 운영','eDM·LMS·MMS CRM 고객 여정 기획'],result:[]},
+    ],
+    bullets:['glo 월별 Key Visual 개발 및 전 채널 통일감 유지 (홈페이지·SNS·이벤트·CRM)','Key Video 3종 기획·제작 ("프로검색러", "프로쇼핑러", "프로고민러")','Discover Glo · Glo Try · Glo Live 웹사이트 운영 및 Glo Kakao 채널 운영','eDM·LMS·MMS CRM 고객 여정 기획 (무료 체험 → 쿠폰 → 구매 전환)','블로그 SEO — 월 40명+ 블로거 협업, 네이버 상위 노출 모니터링','glo 프로 슬림 셀럽(넉살·제이블랙·온주완·김세동) 커스텀 기프트 기획·제작'],
+    sidebar:{기간:'2020.04 — 2022.02',역할:'사원 / 대리',담당브랜드:'glo (British American Tobacco)',카테고리:'Creative, Digital, CRM'},
+    images:['glo Key Visual','소셜 채널 운영','Glo Live 웹사이트','블로그 SEO','셀럽 기프팅','CRM eDM']
+  },
+  hp:{
+    cat:'B2B IT Brand',brand:'HP Korea',period:'2022.03 — 2022.11',
+    tagline:['HP Korea의 웨비나 및 대형 전시 행사(K-Print, KOSIGN)를','크리에이티브 기획부터 현장 운영까지 End-to-End로 총괄했습니다.','클라이언트·내부팀·외부 주관사를 연결하는 단일 커뮤니케이션 허브 역할을 담당했습니다.'],
+    stats:[{v:'2개',l:'대형 전시 행사 운영'},{v:'B2B',l:'웨비나 기획·운영'},{v:'ESG',l:'소재 허니콤 보드 제작'},{v:'단일',l:'커뮤니케이션 허브'}],
+    overview:['HP Korea 브랜드의 웨비나와 오프라인 전시 행사 전반에 대한 크리에이티브 및 운영을 리드했습니다.','K-PRINT 2022(일산 킨텍스)와 KOSIGN 2022(서울 코엑스) 두 전시 행사를 출품 신청부터 현장 운영·철수까지 총괄했습니다.','ESG 방향성을 고려한 허니콤 보드 활용 경품·공간 구조물 제안 등 차별화된 크리에이티브를 제안했습니다.'],
+    pmg:[
+      {eyebrow:'HP Korea · 2022',title:'K-PRINT 2022 · KOSIGN 2022 전시 운영',scope:['K-PRINT 2022 (일산 킨텍스 / 2022.08.25–27) — 출품 신청부터 현장 운영·철수 총괄','KOSIGN 2022 (서울 코엑스 / 2022.11.10–12) — 행사 운영 전 과정 총괄','ESG 소재(허니콤 보드) 활용 경품 및 공간 구조물 제안·제작'],result:[]},
+    ],
+    bullets:['웨비나 — Key Visual 콘셉트 제안, eDM·MMS·광고 소재 디자인','내부 개발팀과 협업한 이벤트 페이지 구조 정의 및 개설','K-PRINT 2022 (일산 킨텍스) — 출품 신청부터 현장 운영·철수까지 총괄','KOSIGN 2022 (서울 코엑스) — 행사 운영 전 과정 총괄','ESG 소재(허니콤 보드) 활용 경품 및 공간 구조물 제안·제작','클라이언트·내부 유관부서·외부 주관사 간 단일 커뮤니케이션 허브 역할 수행'],
+    sidebar:{기간:'2022.03 — 2022.11',역할:'대리',행사:'K-PRINT · KOSIGN · 웨비나',카테고리:'Creative, Event, B2B'},
+    images:['K-Print 전시 부스','KOSIGN 행사','웨비나 KV','공간 3D 배치도','허니콤 보드 제작','현장 설치']
+  },
+  laka:{
+    cat:'Beauty Brand',brand:'Laka',period:'2025.06 — 2025.09',
+    tagline:['뷰티 브랜드 Laka의 리브랜딩 시점에 신규 비딩을 통과하고','FILL ME / FEEL ME 캠페인 기획 및 7·8월 마케팅 실행을 총괄했습니다.','8월 상시 ROAS 264%, 올리브영 메이크업 카테고리 1위를 달성했습니다.'],
+    stats:[{v:'264%',l:'8월 상시 ROAS'},{v:'#1',l:'올리브영 메이크업 카테고리'},{v:'100건+',l:'7·8월 디지털 바이럴'},{v:'4.2M',l:'7월 바이럴 Reach'}],
+    overview:['뷰티 브랜드 Laka의 리브랜딩 시점 신규 비딩에 참여, "ME" 키워드 프레임 기반의 FILL ME/FEEL ME 이중 메시지 콘셉트를 제안하여 비딩을 통과했습니다.','"필미 틴트" 펫네임을 개발하고 올리브영 픽, 올영 세일 캠페인에 참여했습니다.','7월과 8월 디지털 바이럴 및 퍼포먼스 광고를 통합 운영하며 ROAS 개선과 카테고리 1위를 달성했습니다.'],
+    pmg:[
+      {eyebrow:'Laka · 2025',title:'FILL ME / FEEL ME 캠페인',scope:['"ME" 키워드 기반 비딩 제안 통과 — FILL ME / FEEL ME 이중 메시지 구조 제안','"필미 틴트" 펫네임 개발 → 브랜드 즉시 컨펌 및 캠페인 전체 적용','7월 바이럴 57건 — Reach 4.2M / 8월 바이럴 43건 — Reach 3.6M'],result:[{v:'264%',l:'ROAS'},{v:'#1',l:'올리브영 메이크업'}]},
+    ],
+    bullets:['"ME" 키워드 기반 비딩 제안 통과 — FILL ME / FEEL ME 이중 메시지 구조 제안','"필미 틴트" 펫네임 개발 → 브랜드 즉시 컨펌 및 캠페인 전체 적용','7월 바이럴 57건 — Reach 4.2M, Engagement 28,505','8월 바이럴 43건 — Reach 3.6M, View 535,004','8월 상시 ROAS 264% 달성 (7월 대비 +13%)','오늘의 특가 당일 올리브영 메이크업 카테고리 1위 달성','A/B 테스트 기반 광고 소재 효율 검증 및 인플루언서 콘텐츠 2차 활용 구조 설계'],
+    sidebar:{기간:'2025.06 — 2025.09',역할:'차장 (셀장)',플랫폼:'Olive Young · Instagram · YouTube',카테고리:'Creative, Digital, Performance'},
+    images:['FILL ME KV','인플루언서 콘텐츠','올리브영 픽','광고 소재','8월 바이럴','퍼포먼스 리포트']
+  },
+  others:{
+    cat:'Various Categories',brand:'기타 클라이언트',period:'2019 — 2024',
+    tagline:['다양한 카테고리의 브랜드와 협업하며 폭넓은 마케팅 경험을 쌓았습니다.','명품(에르메스), 헤어케어(TS 트릴리온), 의료기기(에실로), 배터리(에너자이저) 등','카테고리별 특성에 맞는 마케팅 전략을 실행했습니다.'],
+    stats:[{v:'2년+',l:'에르메스 카카오 채널'},{v:'전국',l:'에너자이저 134개 매장 이벤트'},{v:'3개',l:'TS 트릴리온 하위 브랜드'},{v:'2021',l:'에실로 디지털 활성화'}],
+    overview:['다양한 카테고리의 클라이언트와 협업하며 폭넓은 마케팅 경험을 쌓았습니다.','에르메스 카카오톡 채널을 장기 운영하며 프리미엄 브랜드 커뮤니케이션을 담당했습니다.','TS 트릴리온의 TS샴푸·세바메드·반디니 3개 브랜드를 통합 운영하며 소셜, 퍼포먼스 광고, 라이브, 커뮤니티 바이럴을 실행했습니다.'],
+    pmg:[
+      {eyebrow:'Hermès · 2020',title:'에르메스 카카오톡 채널 운영',scope:['카카오톡 공식 채널 오픈 및 홈 배너·자동 채팅 세팅','이미지·영상 콘텐츠 및 카카오 푸시 메시지 정기 발행','브랜드 캠페인 소식 정기 업데이트'],result:[]},
+    ],
+    bullets:['에르메스 — 카카오톡 공식 채널 운영 (2021.07 — 2023.04)','TS 트릴리온 — TS·세바메드·반디니 통합 브랜드 운영 (소셜, 퍼포먼스, 라이브, 커뮤니티 바이럴)','TS 트릴리온 — 주주 이벤트 라이브 공개 추첨 방송 기획·운영 (YouTube·IG 동시 송출)','에실로 — 전국 안경원 로컬 소셜 미디어 활성화 프로그램 기획','에너자이저 — 전국 하이퍼마트·농협 134개 매장 BTL 이벤트 운영 (뽑기·룰렛·구매인증)','델(DELL) — IT 리뷰 인플루언서 바이럴 (블로그·유튜브), 재택근무 콘셉트 캠페인'],
+    sidebar:{기간:'2019 — 2024',역할:'사원 / 대리',담당브랜드:'Hermès · TS Trillion · Essilor · Energizer · Dell 외',카테고리:'Creative, Digital, Event'},
+    images:['에르메스 카카오 채널','TS 트릴리온 라이브','에실로 디지털 활성화','에너자이저 매장 이벤트','델 인플루언서 바이럴','스타벅스 굿즈']
+  }
+};
+
+function buildDetail(k){
+  const d=CL[k];
+  const statsHTML=d.stats.map(s=>`<div class="d-stat"><div class="d-stat-val">${s.v}</div><div class="d-stat-lbl">${s.l}</div></div>`).join('');
+  const taglineHTML=d.tagline.map(t=>`<p>${t}</p>`).join('');
+  const overviewHTML=d.overview.map(p=>`<p>${p}</p>`).join('');
+  const bulletsHTML=d.bullets.map(b=>`<div class="d-bullet"><div class="d-dot"></div><div>${b}</div></div>`).join('');
+
+  const pmgCardsHTML=d.pmg.map(card=>{
+    const scopeItems=card.scope.map(s=>`<li>${s}</li>`).join('');
+    const resultHTML=card.result.length?`<div class="pmg-card-result">${card.result.map(r=>`<div class="pmg-res-item"><div class="pmg-res-val">${r.v}</div><div class="pmg-res-lbl">${r.l}</div></div>`).join('')}</div>`:'';
+    return `<div class="pmg-card">
+      <div class="pmg-card-img"><div class="pmg-img-placeholder">◻</div><div class="pmg-img-lbl">이미지 영역</div></div>
+      <div class="pmg-card-info">
+        <div class="pmg-card-eyebrow">${card.eyebrow}</div>
+        <div class="pmg-card-title">${card.title}</div>
+        <div class="pmg-card-scope-title">Work Scope</div>
+        <ul class="pmg-card-scope">${scopeItems}</ul>
+        ${resultHTML}
+      </div>
+    </div>`;
+  }).join('');
+
+  const sidebarRows=Object.entries(d.sidebar).map(([k,v])=>`<div class="sbr"><div class="sb-lbl">${k}</div><div class="sb-val">${v}</div></div>`).join('');
+  const keyResultRows=d.stats.map(s=>`<div class="sbr sbr-dark"><div class="sb-lbl" style="color:rgba(255,255,255,.3)">${s.l}</div><div style="font-family:var(--serif);font-size:16px;color:#fff;text-align:right;flex:1">${s.v}</div></div>`).join('');
+  const galleryHTML=d.images.map(img=>`<div class="gi"><div class="gi-icon">◻</div><div class="gi-lbl">${img}</div></div>`).join('');
+
+  return `
+    <div class="d-hero">
+      <div class="d-hero-bg">${d.brand.split(' ')[0].toUpperCase()}</div>
+      <div class="d-hero-inner">
+        <div class="d-cat">${d.cat}</div>
+        <div class="d-brand">${d.brand}</div>
+        <div class="d-period">${d.period}</div>
+        <div class="d-tagline">${taglineHTML}</div>
+        <div class="d-stats-bar">${statsHTML}</div>
+      </div>
+    </div>
+    <div class="d-body">
+      <div class="d-two-col">
+        <div>
+          <div class="d-sec-title">Overview</div>
+          <div class="d-overview">${overviewHTML}</div>
+          ${pmgCardsHTML?`<div class="proj-cards-grid" style="margin-top:40px"><div class="d-sec-title">Activity Overview</div>${pmgCardsHTML}</div>`:''}
+          <div class="d-bullets" style="margin-top:40px"><div class="d-sec-title">주요 활동</div>${bulletsHTML}</div>
+        </div>
+        <div>
+          <div class="d-sidebar-card"><div class="sbt">Project Info</div>${sidebarRows}</div>
+          <div class="d-sidebar-card d-sidebar-dark"><div class="sbt">Key Results</div>${keyResultRows}</div>
+        </div>
+      </div>
+      <div class="d-gallery"><div class="d-sec-title">Image Gallery</div><div class="gallery-g">${galleryHTML}</div></div>
+    </div>`;
+}
+
+function openClient(k){
+  document.getElementById('d-nav-name').textContent=CL[k].brand;
+  document.getElementById('d-content').innerHTML=buildDetail(k);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goHome(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  initFade();
+}
+
+function navTo(sel){
+  if(!document.getElementById('page-home').classList.contains('active'))goHome();
+  setTimeout(()=>{const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'});},80);
+}
+
+function toggleMob(){document.getElementById('mobMenu').classList.toggle('open');}
+
+function filterProj(cat,btn){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pc').forEach(c=>{
+    const cats=c.dataset.cat||'';
+    c.style.display=(cat==='all'||cats.includes(cat))?'grid':'none';
+  });
+}
+
+function initFade(){
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.07,rootMargin:'0px 0px -24px 0px'});
+  document.querySelectorAll('#page-home .fade').forEach(el=>{el.classList.remove('vis');obs.observe(el);});
+}
+initFade();
+
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.querySelectorAll('#page-home section[id]').forEach(s=>{
+    if(y>=s.offsetTop-100){
+      document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+      const match=document.querySelector(`.nav-links a[onclick*="${s.id}"]`);
+      if(match)match.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
